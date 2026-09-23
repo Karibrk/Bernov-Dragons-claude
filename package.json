@@ -1,0 +1,7 @@
+{
+  "name": "bernov-dragons-denik",
+  "private": true,
+  "dependencies": {
+    "@vercel/blob": "^2.8.0"
+  }
+}

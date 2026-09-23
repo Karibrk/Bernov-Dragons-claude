@@ -1,29 +1,22 @@
-# Bernov & Dragons — DENÍK_CORE
+# Bernov & Dragons — DENÍK
 
-Deník kampaně Karibrka de Vill. Jedna statická HTML stránka, žádný build, žádné závislosti.
+Deník kampaně Karibrka de Villa. Běží na Vercelu: **https://bernov-dragons-cl.vercel.app**
 
-## Nasazení na Vercel
-1. Nahraj tenhle repozitář na GitHub.
-2. Ve Vercelu: **Add New → Project → Import** tenhle repozitář.
-3. Framework Preset: **Other**. Build Command: nechat prázdné. Output Directory: nechat prázdné (root).
-4. Deploy.
+## Struktura
+- `index.html` — celý deník (jeden soubor)
+- `denik-media/` — obrázky (portraits, locations, other, items, npcs…); nový obrázek = soubor do správné složky
+- `api/generate.js` — generátor obrázků: AI Gateway → Vercel Blob
+- `vercel.json`, `package.json`
 
-## Obrázky
-`denik-media/` drží grafiku ve formátu `.webp`:
+## Generátor obrázků — nastavení (jednou)
+Vercel → projekt → **Settings → Environment Variables**:
 
-| složka | co tam patří |
+| Proměnná | Hodnota |
 |---|---|
-| `portraits/` | portréty družiny (`karibrk.webp`, `elie.webp`, …) |
-| `avatars/` | malé ikonky postav |
-| `npcs/` | NPC |
-| `locations/` | místa a mapy (`u-tri-vran.webp`) |
-| `items/` | předměty |
-| `icons/` | ikony kouzel a značek |
-| `other/` | scény do Střípků (`kari-elie-runy.webp`, …) |
-| `data/` | zálohy a exporty |
+| `AI_GATEWAY_API_KEY` | klíč z Vercel → AI Gateway → API Keys |
+| `DENIK_KEY` | vlastní heslo; deník se na něj zeptá při prvním generování |
+| `IMAGE_MODEL` | volitelné, výchozí `openai/gpt-image-2` |
 
-Deník hledá obrázek nejdřív v zapečeném balíku uvnitř HTML a pak v téhle složce.
-Nový obrázek = nahrát soubor se správným názvem do správné složky. Nic víc.
+Vercel → projekt → **Storage → Create → Blob** → připojit k projektu (doplní `BLOB_READ_WRITE_TOKEN`).
 
-## Stav
-Ukládá se do `localStorage` prohlížeče. Záloha: **Přenos → Stáhnout deník .html**.
+Potom **Redeploy**. Kontrola: `https://bernov-dragons-cl.vercel.app/api/generate` musí ukázat `gateway`, `blob`, `key` = `true`.

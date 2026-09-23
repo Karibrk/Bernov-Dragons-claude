@@ -3,7 +3,17 @@
   "headers": [
     {
       "source": "/denik-media/(.*)",
-      "headers": [{ "key": "Cache-Control", "value": "public, max-age=604800" }]
+      "headers": [
+        {
+          "key": "Cache-Control",
+          "value": "public, max-age=604800"
+        }
+      ]
     }
-  ]
+  ],
+  "functions": {
+    "api/generate.js": {
+      "maxDuration": 60
+    }
+  }
 }
